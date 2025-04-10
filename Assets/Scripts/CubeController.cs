@@ -30,25 +30,20 @@ public class CubeController : MonoBehaviour
     IEnumerator DoMovement()
     {
         canIpnut = false;
-        Vector2 input = default;
 
         switch (movement)
         {
             case Vector2 v when v.y == 1:
                 rotationParentIsInBottomLeft = false;
-                input = new(0, 1);
                 break;
             case Vector2 v when v.y == -1:
                 rotationParentIsInBottomLeft = true;
-                input = new(0, -1);
                 break;
             case Vector2 v when v.x == 1:
                 rotationParentIsInBottomLeft = false;
-                input = new(1, 0);
                 break;
             case Vector2 v when v.x == -1:
                 rotationParentIsInBottomLeft = true;
-                input = new(-1, 0);
                 break;
         }
 
@@ -64,6 +59,22 @@ public class CubeController : MonoBehaviour
         float timer = 0;
         while (timer < rollTime)
         {
+            switch (movement)
+            {
+                case Vector2 v when v.y == 1: //roll around x
+                    //rotationParent.rotation = Quaternion..sl
+                    break;
+                case Vector2 v when v.y == -1:
+
+                    break;
+                case Vector2 v when v.x == 1: //roll around z
+
+                    break;
+                case Vector2 v when v.x == -1:
+
+                    break;
+            }
+
 
             yield return null;
             timer += Time.deltaTime;
