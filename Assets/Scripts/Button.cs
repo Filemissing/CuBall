@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 public class Button : MonoBehaviour
@@ -9,19 +10,27 @@ public class Button : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public bool isActive;
+    public UnityEvent onPress;
+    public UnityEvent onRelease;
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.CompareTag("CubePlayer") || collision.gameObject.CompareTag("BallPlayer"))
+        if (other.gameObject.CompareTag("CubePlayer") || other.gameObject.CompareTag("BallPlayer"))
         {
             animator.SetTrigger("Pressed");
+            isActive = true;
+            onPress.Invoke();
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("CubePlayer") || collision.gameObject.CompareTag("BallPlayer"))
+        if (other.gameObject.CompareTag("CubePlayer") || other.gameObject.CompareTag("BallPlayer"))
         {
             animator.SetTrigger("Released");
+            isActive = false;
+            onRelease.Invoke();
         }
     }
 }
