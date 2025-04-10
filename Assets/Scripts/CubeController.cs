@@ -8,29 +8,43 @@ public class CubeController : MonoBehaviour
     [SerializeField] Transform cube;
     [Space]
     [SerializeField] float rollTime = .5f;
+    [SerializeField] float fallAcceleration = 1;
 
     Vector2 movement = default;
-    bool canIpnut = true;
+    [HideInInspector] public bool CanInput = true;
     bool rotationParentIsInBottomLeft = true; //true = 0,0   false = 1,1
-
-    //rotationparent at relative 0,0 can move in -z and -x
-    //rotationparent at relative 1,1 can move in +z and +x
-
-    public void OnMove(InputValue inputValue)
-    {
-        movement = inputValue.Get<Vector2>();
-        //print(movement);
-    }
 
     void Update()
     {
-        if (movement != Vector2.zero && canIpnut)
+        GetMovement();
+
+        if (!Physics.Raycast(transform.position + new Vector3(.5f, .5f, .5f), Vector3.down, .6f) && CanInput)
+            StartCoroutine(DoFalling());
+
+        if (movement != Vector2.zero && CanInput)
             StartCoroutine(DoMovement());
+    }
+
+    void GetMovement()
+    {
+        if (Input.GetKey(KeyCode.W))
+            movement.y = 1;
+        else if (Input.GetKey(KeyCode.S))
+            movement.y = -1;
+        else
+            movement.y = 0;
+
+        if (Input.GetKey(KeyCode.D))
+            movement.x = 1;
+        else if (Input.GetKey(KeyCode.A))
+            movement.x= -1;
+        else
+            movement.x = 0;
     }
 
     IEnumerator DoMovement()
     {
-        canIpnut = false;
+        CanInput = false;
         Vector2 input = movement;
 
         switch (input)
@@ -68,16 +82,16 @@ public class CubeController : MonoBehaviour
             switch (input)
             {
                 case Vector2 v when v.y == 1: //roll around x
-                    rotationParent.rotation = Quaternion.Slerp(rotationParent.rotation, Quaternion.Euler(90, 0, 0), timer / rollTime);
+                    rotationParent.rotation = Quaternion.Euler(Mathf.Lerp(0, 90, timer / rollTime), 0, 0);
                     break;
                 case Vector2 v when v.y == -1:
-                    rotationParent.rotation = Quaternion.Slerp(rotationParent.rotation, Quaternion.Euler(-90, 0, 0), timer / rollTime);
+                    rotationParent.rotation = Quaternion.Euler(Mathf.Lerp(0, -90, timer / rollTime), 0, 0);
                     break;
                 case Vector2 v when v.x == 1: //roll around z
-                    rotationParent.rotation = Quaternion.Slerp(rotationParent.rotation, Quaternion.Euler(0, 0, -90), timer / rollTime);
+                    rotationParent.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, -90, timer / rollTime));
                     break;
                 case Vector2 v when v.x == -1:
-                    rotationParent.rotation = Quaternion.Slerp(rotationParent.rotation, Quaternion.Euler(0, 0, 90), timer / rollTime);
+                    rotationParent.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 90, timer / rollTime));
                     break;
             }
             yield return null;
@@ -106,7 +120,30 @@ public class CubeController : MonoBehaviour
         cube.position = cubePosition;
         cube.rotation = cubeRotation;
 
-        yield return null;
-        canIpnut = true;
+        CanInput = true;
+    }
+
+    IEnumerator DoFalling()
+    {
+        CanInput = false;
+        RaycastHit hit;
+        Physics.Raycast(transform.position, Vector3.down, out hit);
+        Vector3 floorPosition = hit.point;
+
+        float speed = 0;
+        Vector3 startPosition = transform.position;
+        while(transform.position.y > floorPosition.y)
+        {
+            speed += fallAcceleration * Time.deltaTime;
+            transform.position -= new Vector3(0, speed, 0);
+            if (transform.position.y <= floorPosition.y)
+            {
+                transform.position = floorPosition;
+                break;
+            }
+            yield return null;
+        }
+
+        CanInput = true;
     }
 }
