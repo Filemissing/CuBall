@@ -49,6 +49,7 @@ public class Elevator : MonoBehaviour
         else if (other.CompareTag("CubePlayer"))
         {
             other.transform.parent.parent.parent = transform;
+            other.transform.parent.parent.GetComponent<CubeController>().CanFall = false;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -60,6 +61,7 @@ public class Elevator : MonoBehaviour
         else if (other.CompareTag("CubePlayer"))
         {
             other.transform.parent.parent.parent = null;
+            other.transform.parent.parent.GetComponent<CubeController>().CanFall = true;
         }
     }
 }
