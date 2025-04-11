@@ -12,13 +12,14 @@ public class CubeController : MonoBehaviour
 
     Vector2 movement = default;
     [HideInInspector] public bool CanInput = true;
+    public bool CanFall = true;
     bool rotationParentIsInBottomLeft = true; //true = 0,0   false = 1,1
 
     void Update()
     {
         GetMovement();
 
-        if (!Physics.Raycast(transform.position + new Vector3(.5f, .5f, .5f), Vector3.down, .6f) && CanInput)
+        if (!Physics.Raycast(transform.position + new Vector3(.5f, .5f, .5f), Vector3.down, .6f) && CanInput && CanFall)
             StartCoroutine(DoFalling());
 
         if (movement != Vector2.zero && CanInput)
