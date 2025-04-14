@@ -27,6 +27,12 @@ public class Elevator : MonoBehaviour
     {
         if (isMoving)
         {
+            CubeController cubecontroller = GetComponentInChildren<CubeController>();
+            if (cubecontroller != null)
+            {
+                cubecontroller.CanFall = false;
+            }
+
             Vector3 direction = moveBack ? startPos - transform.position : endPos - transform.position;
             direction.Normalize();
 
@@ -49,7 +55,10 @@ public class Elevator : MonoBehaviour
         else if (other.CompareTag("CubePlayer"))
         {
             other.transform.parent.parent.parent = transform;
-            other.transform.parent.parent.GetComponent<CubeController>().CanFall = false;
+            if (isMoving)
+            {
+                other.transform.parent.parent.GetComponent<CubeController>().CanFall = false; 
+            }
         }
     }
     private void OnTriggerExit(Collider other)
