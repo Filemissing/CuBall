@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class BallController : MonoBehaviour
 {
     public float movementSpeed;
+    public bool canMove;
 
     Rigidbody rb;
     Vector2 moveDirection;
@@ -15,6 +16,8 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
+        if (!canMove) return;
+
         if (Input.GetKey(KeyCode.UpArrow))
             moveDirection.y = 1;
         else if (Input.GetKey(KeyCode.DownArrow))
@@ -31,23 +34,11 @@ public class BallController : MonoBehaviour
 
         moveDirection.Normalize();
 
-        //Vector3 targetSpeed = moveDirection * movementSpeed;
-
-        //Vector3 currentSpeed = rb.linearVelocity;
-
-        //Vector3 difference = currentSpeed - MaxByAbs(currentSpeed, targetSpeed);
-
-        //rb.AddForce(difference);
-
         rb.linearVelocity = new Vector3(moveDirection.x * movementSpeed, rb.linearVelocity.y, moveDirection.y * movementSpeed);
     }
 
-    Vector3 MaxByAbs(Vector3 vector1, Vector3 vector2)
+    private void OnCollisionEnter(Collision collision)
     {
-        float x = Mathf.Max(Mathf.Abs(vector1.x), Mathf.Abs(vector2.x));
-        float y = Mathf.Max(Mathf.Abs(vector1.y), Mathf.Abs(vector2.y));
-        float z = Mathf.Max(Mathf.Abs(vector1.z), Mathf.Abs(vector2.z));
-
-        return new Vector3(x, y, z);
+        if (!canMove) canMove = true;
     }
 }
