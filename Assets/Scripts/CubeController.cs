@@ -45,28 +45,32 @@ public class CubeController : MonoBehaviour
 
     IEnumerator DoMovement()
     {
-        CanInput = false;
         Vector2 input = movement;
 
         switch (input)
         {
             case Vector2 v when v.y == 1:
-                rotationParentIsInBottomLeft = false;
                 input = new(0, 1);
+                if (Physics.Raycast(transform.position + new Vector3(.5f, .5f, .5f), new(0, 0, 1), 1f)) yield break;
+                rotationParentIsInBottomLeft = false;
                 break;
             case Vector2 v when v.y == -1:
-                rotationParentIsInBottomLeft = true;
                 input = new(0, -1);
+                if (Physics.Raycast(transform.position + new Vector3(.5f, .5f, .5f), new(0, 0, -1), 1f)) yield break;
+                rotationParentIsInBottomLeft = true;
                 break;
             case Vector2 v when v.x == 1:
-                rotationParentIsInBottomLeft = false;
                 input = new(1, 0);
+                if (Physics.Raycast(transform.position + new Vector3(.5f, .5f, .5f), new(1, 0, 0), 1f)) yield break;
+                rotationParentIsInBottomLeft = false;
                 break;
             case Vector2 v when v.x == -1:
-                rotationParentIsInBottomLeft = true;
                 input = new(-1, 0);
+                if (Physics.Raycast(transform.position + new Vector3(.5f, .5f, .5f), new(-1, 0, 0), 1f)) yield break;
+                rotationParentIsInBottomLeft = true;
                 break;
         }
+        CanInput = false;
 
         //set rotationParent position
         Vector3 cubePosition = cube.position;
@@ -128,7 +132,8 @@ public class CubeController : MonoBehaviour
     {
         CanInput = false;
         RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit);
+        if (!Physics.Raycast(transform.position, Vector3.down, out hit))
+            yield break;
         Vector3 floorPosition = hit.point;
 
         float speed = 0;
