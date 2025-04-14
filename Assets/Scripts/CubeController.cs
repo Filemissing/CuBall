@@ -132,9 +132,15 @@ public class CubeController : MonoBehaviour
     {
         CanInput = false;
         RaycastHit hit;
+        Vector3 floorPosition = default;
         if (!Physics.Raycast(transform.position, Vector3.down, out hit))
-            yield break;
-        Vector3 floorPosition = hit.point;
+        {
+            floorPosition = transform.position + Vector3.down * 9001;
+        }
+        else
+        {
+            floorPosition = hit.point;
+        }
 
         float speed = 0;
         Vector3 startPosition = transform.position;
