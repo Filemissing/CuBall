@@ -17,7 +17,7 @@ public class Fan : MonoBehaviour
 
             if (hit.transform.CompareTag("BallPlayer"))
             {
-                hit.rigidbody.AddForceAtPosition(transform.forward * strength, hit.point, ForceMode.Force);
+                hit.rigidbody.AddForce(transform.forward * strength, ForceMode.Force);
             }
         }
     }
