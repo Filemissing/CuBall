@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class Door : MonoBehaviour
 {
-    MeshRenderer renderer;
+    new MeshRenderer renderer;
     BoxCollider boxCollider;
     private void Awake()
     {
