@@ -2130,6 +2130,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e6add1e8c3a8fc42af283f1d6ccdb26, type: 3}
+--- !u!114 &968109419 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1127886078594078019, guid: 6e6add1e8c3a8fc42af283f1d6ccdb26, type: 3}
+  m_PrefabInstance: {fileID: 1184554638}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe7d384ff795b4e429c971e98531ed93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &968654788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3358,8 +3369,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338940625}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25660446, y: 0.12607616, z: -0.033781964, w: 0.95766264}
-  m_LocalPosition: {x: -1.9999998, y: 13, z: -11}
+  m_LocalRotation: {x: 0.25660443, y: 0.12607618, z: -0.033781964, w: 0.9576627}
+  m_LocalPosition: {x: -1.9999998, y: 14, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3464,6 +3475,10 @@ PrefabInstance:
     - target: {fileID: 6598644973385264543, guid: 0fe8f278536d27c40ab4bdde322b9dfc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271231808231793158, guid: 0fe8f278536d27c40ab4bdde322b9dfc, type: 3}
+      propertyPath: halfExtents.y
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4086,7 +4101,7 @@ PrefabInstance:
     - target: {fileID: 4113397062436351424, guid: 24656403a2ecbe8429734de9192a92e1, type: 3}
       propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1288324566}
+      objectReference: {fileID: 968109419}
     - target: {fileID: 4113397062436351424, guid: 24656403a2ecbe8429734de9192a92e1, type: 3}
       propertyPath: onRelease.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -4094,7 +4109,7 @@ PrefabInstance:
     - target: {fileID: 4113397062436351424, guid: 24656403a2ecbe8429734de9192a92e1, type: 3}
       propertyPath: onRelease.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1288324566}
+      objectReference: {fileID: 968109419}
     - target: {fileID: 4113397062436351424, guid: 24656403a2ecbe8429734de9192a92e1, type: 3}
       propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
